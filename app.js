@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const mongoConnect = require('./util/database');
+const mongoConnect = require('./util/database').mongoConnect;
 
 const comboVizRoutes = require('./routes/comboViz');
 
@@ -18,8 +18,7 @@ app.use((req, res, next) => {
 
 app.use('/comboViz', comboVizRoutes);
 
-mongoConnect((client) => {
+mongoConnect(() => {
     app.listen(8080);
-    console.log(client);
     console.log("Listening on port 8080...");
 });
