@@ -1,30 +1,18 @@
-const getDB = require('../util/database').getDB;
+const mongoose = require('mongoose');
 
-class Game {
-    constructor(settings, frames, stats) {
-        this.settings = settings;
-        this.frames = frames;
-        this.stats = stats;
-    }
+const GameSchema = mongoose.Schema({
+    settings: {
+        type: Object,
+        required: true
+    },
+    frames: {
+        type: Object,
+        required: true
+    },
+    stats: {
+        type: Object,
+        required: true
+    },
+})
 
-    save() {
-        // noSQL levels:
-        // Database
-        const db = getDB();
-        // Collection by name, followed by MongoDB commands
-        return db.collection('games')
-            .insertOne(this)
-            .then( res => {
-                // console.log(res);
-            })
-            .catch( err => {
-                console.log(err);
-            });
-        // Document
-
-    }
-
-}
-
-
-module.exports = Game;
+module.exports = mongoose.model('Game', GameSchema);
