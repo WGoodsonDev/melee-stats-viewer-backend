@@ -4,6 +4,9 @@ const gamesController = require('../controllers/games');
 // Initialize router
 const router = express.Router();
 
+// Upload (POST)
+router.post('/uploadGame', gamesController.uploadGame);
+
 // Create (POST)
 router.post('/createGame', gamesController.createGame);
 

@@ -1,9 +1,24 @@
 const gameSchema = require('../models/games');
+const IncomingForm = require('formidable').IncomingForm;
+
+const uploadGame = (req, res) => {
+    console.log("Upload request received");
+    const form = new IncomingForm();
+    form.on('file', (field, file) => {
+        // file.path - location of file in local filesystem
+        console.log(file.path);
+    });
+    form.on('end', () => {
+        res.json();
+    })
+    form.parse(req);
+};
 
 const createGame = (req, res) => {
     const game = new gameSchema({
+        metadata: req.body.metadata,
         settings: req.body.settings,
-        frames: req.body.frames,
+        // frames: req.body.frames,
         stats: req.body.stats,
     });
 
@@ -58,8 +73,9 @@ const deleteGame = async(req, res) => {
 };
 
 module.exports = {
-    createGame: createGame,
-    getGame: getGame,
-    updateGame: updateGame,
-    deleteGame: deleteGame
+    uploadGame,
+    createGame,
+    getGame,
+    updateGame,
+    deleteGame
 };

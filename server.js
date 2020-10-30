@@ -1,10 +1,16 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const gamesRoutes = require('./routes/games');
 require('dotenv/config');
 
-const app = express();
+const corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200
+}
 
+const app = express();
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use('/api/games', gamesRoutes)
