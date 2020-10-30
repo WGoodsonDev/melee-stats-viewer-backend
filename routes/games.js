@@ -13,6 +13,9 @@ router.post('/createGame', gamesController.createGame);
 // Read (GET)
 router.get('/getGame/:id', gamesController.getGame);
 
+// Get all games with specific netplay code
+// router.get('/getGamesByPlayerCode/:playerCode', gamesController.getGamesByPlayerCode);
+
 // Update (PATCH)
 router.patch('/updateGame/:id', gamesController.updateGame);
 
