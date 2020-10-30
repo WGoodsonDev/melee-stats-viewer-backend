@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const GameSchema = mongoose.Schema({
     metadata: {
-        startTime: Date,
+        startAt: Date,
         lastFrame: Number,
         players: {
             0: {

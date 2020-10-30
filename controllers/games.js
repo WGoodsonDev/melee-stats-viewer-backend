@@ -21,12 +21,13 @@ const uploadGame = (req, res) => {
 const saveUploadedGame = (uploadedGame) => {
     const metadata = uploadedGame.getMetadata();
     const settings = uploadedGame.getSettings();
+    // const frames = uploadedGame.getFrames();
     const stats = uploadedGame.getStats();
 
     const game = new gameSchema({
         metadata: metadata,
         settings: settings,
-        // frames: req.body.frames,
+        // frames: frames,
         stats: stats,
     });
 
