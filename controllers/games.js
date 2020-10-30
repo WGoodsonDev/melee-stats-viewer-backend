@@ -1,18 +1,41 @@
 const gameSchema = require('../models/games');
 const IncomingForm = require('formidable').IncomingForm;
+const {default: SlippiGame } = require('@slippi/slippi-js');
 
 const uploadGame = (req, res) => {
     console.log("Upload request received");
     const form = new IncomingForm();
     form.on('file', (field, file) => {
         // file.path - location of file in local filesystem
-        console.log(file.path);
+
+        const game = new SlippiGame(file.path);
+        saveUploadedGame(game);
+
     });
     form.on('end', () => {
-        res.json();
+        res.status(200).json();
     })
     form.parse(req);
 };
+
+const saveUploadedGame = (uploadedGame) => {
+    const metadata = uploadedGame.getMetadata();
+    const settings = uploadedGame.getSettings();
+    const stats = uploadedGame.getStats();
+
+    const game = new gameSchema({
+        metadata: metadata,
+        settings: settings,
+        // frames: req.body.frames,
+        stats: stats,
+    });
+
+    game.save().then(() => {
+        console.log('Game created');
+    }).catch((err) => {
+        console.log(err);
+    });
+}
 
 const createGame = (req, res) => {
     const game = new gameSchema({
