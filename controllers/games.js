@@ -18,15 +18,26 @@ const uploadGame = (req, res) => {
     form.parse(req);
 };
 
-const saveUploadedGame = async (uploadedGame) => {
+const saveUploadedGame = (uploadedGame) => {
     const metadata = uploadedGame.getMetadata();
+    console.log(metadata);
     // Metadata contains unique-identifying info
     // Use that info to check if game already exists
-    const duplicateExists = await gameSchema.find({ metadata: metadata });
-    if(duplicateExists){
-        console.log('Game already exists in database. Aborting...');
-        return;
-    }
+    gameSchema.findOne({ metadata: metadata}, (err, game) => {
+        if(err){
+            console.log('Error: ', err);
+            return;
+        }
+        if(game){
+            console.log('Duplicate game found:');
+            console.log(game.metadata);
+        } else {
+            console.log('No duplicate game found')
+            console.log(game);
+        }
+
+    });
+
     const settings = uploadedGame.getSettings();
     // const frames = uploadedGame.getFrames();
     const stats = uploadedGame.getStats();

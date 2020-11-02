@@ -13,7 +13,8 @@ const GameSchema = mongoose.Schema({
                 names: { netplay: String, code: String },
                 character: String
             },
-        }
+        },
+        playedOn: String
     },
     settings: {
         slpVersion: String,
