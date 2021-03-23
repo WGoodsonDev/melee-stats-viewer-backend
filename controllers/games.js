@@ -6,11 +6,10 @@ const uploadGame = (req, res) => {
     console.log("Upload request received");
     const form = new IncomingForm();
     form.on('file', (field, file) => {
+        console.log(`file: ${file}`);
         // file.path - location of file in local filesystem
-
         const game = new SlippiGame(file.path);
         saveUploadedGame(game);
-
     });
     form.on('end', () => {
         res.status(200).json();
@@ -33,24 +32,23 @@ const saveUploadedGame = (uploadedGame) => {
             console.log(game.metadata);
         } else {
             console.log('No duplicate game found')
-            console.log(game);
         }
 
     });
 
     const settings = uploadedGame.getSettings();
-    // const frames = uploadedGame.getFrames();
+    const frames = uploadedGame.getFrames();
     const stats = uploadedGame.getStats();
 
     const game = new gameSchema({
         metadata: metadata,
         settings: settings,
-        // frames: frames,
+        frames: frames,
         stats: stats,
     });
 
     game.save().then(() => {
-        console.log('Game created');
+        console.log(`Game created.\nMetadata: ${metadata}`);
     }).catch((err) => {
         console.log(err);
     });
@@ -82,6 +80,10 @@ const getGame = (req, res) => {
             res.status(200).json(results);
         }
     });
+};
+
+const getGames = (req, res) => {
+
 };
 
 // Updates should be async
@@ -118,6 +120,7 @@ module.exports = {
     uploadGame,
     createGame,
     getGame,
+    getGames,
     updateGame,
     deleteGame
 };

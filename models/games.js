@@ -31,51 +31,51 @@ const GameSchema = mongoose.Schema({
             }
         ]
     },
-    // frames: [
-    //     {
-    //         pre: {
-    //             frame: Number,
-    //             playerIndex: Number,
-    //             isNana: Boolean,
-    //             rngSeed: Number,
-    //             actionStateId: Number,
-    //             positionX: Number,
-    //             positionY: Number,
-    //             facingDirection: Number,        // -1 = left, +1 = right
-    //             joystickX: Number,              // [-1, 1]
-    //             joystickY: Number,              // [-1, 1]
-    //             cStickX: Number,                // [-1, 1]
-    //             cStickY: Number,                // [-1, 1]
-    //             trigger: Number,                // [0, 1]
-    //             processedButtons: [
-    //                 { button: String }
-    //             ],
-    //             physicalButtons: [
-    //                 { button: String }
-    //             ],
-    //             physicalLTrigger: Number,       // [0, 1]
-    //             physicalRTrigger: Number,       // [0, 1]
-    //             percent: Number
-    //         },
-    //         post: {
-    //             frame: Number,
-    //             playerIndex: Number,
-    //             isNana: Boolean,
-    //             actionStateId: Number,
-    //             positionX: Number,
-    //             positionY: Number,
-    //             facingDirection: Number,        // -1 = left, +1 = right
-    //             percent: Number,
-    //             shieldSize: Number,
-    //             lastAttackLanded: String,
-    //             currentComboCount: Number,
-    //             lastHitBy: String,
-    //             stocksRemaining: Number,
-    //             actionStateCounter: Number,
-    //             lCancelStatus: Number
-    //         }
-    //     }
-    // ],
+    frames: [
+        {
+            pre: {
+                frame: Number,
+                playerIndex: Number,
+                isNana: Boolean,
+                rngSeed: Number,
+                actionStateId: Number,
+                positionX: Number,
+                positionY: Number,
+                facingDirection: Number,        // -1 = left, +1 = right
+                joystickX: Number,              // [-1, 1]
+                joystickY: Number,              // [-1, 1]
+                cStickX: Number,                // [-1, 1]
+                cStickY: Number,                // [-1, 1]
+                trigger: Number,                // [0, 1]
+                processedButtons: [
+                    { button: String }
+                ],
+                physicalButtons: [
+                    { button: String }
+                ],
+                physicalLTrigger: Number,       // [0, 1]
+                physicalRTrigger: Number,       // [0, 1]
+                percent: Number
+            },
+            post: {
+                frame: Number,
+                playerIndex: Number,
+                isNana: Boolean,
+                actionStateId: Number,
+                positionX: Number,
+                positionY: Number,
+                facingDirection: Number,        // -1 = left, +1 = right
+                percent: Number,
+                shieldSize: Number,
+                lastAttackLanded: String,
+                currentComboCount: Number,
+                lastHitBy: String,
+                stocksRemaining: Number,
+                actionStateCounter: Number,
+                lCancelStatus: Number
+            }
+        }
+    ],
     stats: {
         playableFrameCount: Number,
         stocks: [
