@@ -83,6 +83,17 @@ const getGame = (req, res) => {
     });
 };
 
+const getAllGames = (req, res) => {
+    gameSchema.find({}, (err, results) => {
+        if(err) {
+            console.log(err);
+            res.status(500).json({message: err});
+        } else {
+            res.status(200).json(results);
+        }
+    });
+};
+
 // Updates should be async
 const updateGame = async (req, res) => {
     const gameUpdate = await gameSchema.findOneAndUpdate({_id: req.params.id}, {
@@ -117,6 +128,7 @@ module.exports = {
     uploadGame,
     createGame,
     getGame,
+    getAllGames,
     updateGame,
     deleteGame
 };
