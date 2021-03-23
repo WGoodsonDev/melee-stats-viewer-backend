@@ -23,28 +23,28 @@ const saveUploadedGame = (uploadedGame) => {
     console.log(metadata);
     // Metadata contains unique-identifying info
     // Use that info to check if game already exists
-    gameSchema.findOne({ metadata: metadata}, (err, game) => {
-        if(err){
-            console.log('Error: ', err);
-            return;
-        }
-        if(game){
-            console.log('Duplicate game found:');
-            console.log(game.metadata);
-        } else {
-            console.log('No duplicate game found')
-        }
-
-    });
+    // gameSchema.findOne({ metadata: metadata}, (err, game) => {
+    //     if(err){
+    //         console.log('Error: ', err);
+    //         return;
+    //     }
+    //     if(game){
+    //         console.log('Duplicate game found:');
+    //         console.log(game.metadata);
+    //     } else {
+    //         console.log('No duplicate game found')
+    //     }
+    //
+    // });
 
     const settings = uploadedGame.getSettings();
-    // const frames = uploadedGame.getFrames();
+    const frames = uploadedGame.getFrames();
     const stats = uploadedGame.getStats();
 
     const game = new gameSchema({
         metadata: metadata,
         settings: settings,
-        // frames: frames,
+        frames: Object.values(frames),
         stats: stats,
     });
 
@@ -59,7 +59,7 @@ const createGame = (req, res) => {
     const game = new gameSchema({
         metadata: req.body.metadata,
         settings: req.body.settings,
-        // frames: req.body.frames,
+        frames: Object.values(frames),
         stats: req.body.stats,
     });
 
@@ -88,7 +88,7 @@ const updateGame = async (req, res) => {
     const gameUpdate = await gameSchema.findOneAndUpdate({_id: req.params.id}, {
             $set: {
                 settings: req.body.settings,
-                // frames: req.body.frames,
+                frames: Object.values(req.body.frames),
                 stats: req.body.stats,
             },
         },
