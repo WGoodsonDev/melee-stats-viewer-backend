@@ -33,7 +33,6 @@ const saveUploadedGame = (uploadedGame) => {
             console.log(game.metadata);
         } else {
             console.log('No duplicate game found')
-            console.log(game);
         }
 
     });
@@ -89,7 +88,7 @@ const updateGame = async (req, res) => {
     const gameUpdate = await gameSchema.findOneAndUpdate({_id: req.params.id}, {
             $set: {
                 settings: req.body.settings,
-                frames: req.body.frames,
+                // frames: req.body.frames,
                 stats: req.body.stats,
             },
         },
