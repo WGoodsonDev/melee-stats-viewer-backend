@@ -6,19 +6,21 @@ const GameSchema = mongoose.Schema({
         lastFrame: Number,
         players: {
             0: {
-                names: { netplay: String, code: String },
-                character: String
+                names: {
+                    netplay: String, code: String
+                },
             },
             1: {
-                names: { netplay: String, code: String },
-                character: String
+                names: {
+                    netplay: String, code: String
+                }
             },
         },
         playedOn: String
     },
     settings: {
         slpVersion: String,
-        stage: String,
+        stageId: Number,
         players: [
             {
                 playerIndex: Number,
@@ -67,6 +69,7 @@ const GameSchema = mongoose.Schema({
         }
     ],
     stats: {
+        lastFrame: Number,
         playableFrameCount: Number,
         stocks: [
             {
@@ -80,28 +83,28 @@ const GameSchema = mongoose.Schema({
                 count: Number
             }
         ],
-        conversions: [
-            {
-                playerIndex: Number,
-                opponentIndex: Number,
-                startFrame: Number,
-                endFrame: Number,
-                startPercent: Number,
-                currentPercent: Number,
-                endPercent: Number,
-                moves: [
-                    {
-                        frame: Number,
-                        moveId: Number,
-                        // moveName: String,
-                        hitCount: Number,
-                        damage: Number,
-                    }
-                ],
-                didKill: Boolean,
-                openingType: String,
-            }
-        ],
+        // conversions: [
+        //     {
+        //         playerIndex: Number,
+        //         opponentIndex: Number,
+        //         startFrame: Number,
+        //         endFrame: Number,
+        //         startPercent: Number,
+        //         currentPercent: Number,
+        //         endPercent: Number,
+        //         moves: [
+        //             {
+        //                 frame: Number,
+        //                 moveId: Number,
+        //                 // moveName: String,
+        //                 hitCount: Number,
+        //                 damage: Number,
+        //             }
+        //         ],
+        //         didKill: Boolean,
+        //         openingType: String,
+        //     }
+        // ],
         combos: [
             {
                 playerIndex: Number,
@@ -115,7 +118,6 @@ const GameSchema = mongoose.Schema({
                     {
                         frame: Number,
                         moveId: Number,
-                        // moveName: String,
                         hitCount: Number,
                         damage: Number,
                     }
