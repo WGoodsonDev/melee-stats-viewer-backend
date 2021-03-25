@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const random = require('mongoose-simple-random');
 
 const GameSchema = mongoose.Schema({
     metadata: {
@@ -198,6 +199,7 @@ const GameSchema = mongoose.Schema({
     },
     uploadTime: { type: Date, default: Date.now },
     // (external reference) players: [{ player1: mongoose.Types.ObjectId }, { player2: mongoose.Types.ObjectId }]
-})
+});
+GameSchema.plugin(random);
 
 module.exports = mongoose.model('Game', GameSchema);

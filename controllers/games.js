@@ -20,7 +20,6 @@ const uploadGame = (req, res) => {
 
 const saveUploadedGame = (uploadedGame) => {
     const metadata = uploadedGame.getMetadata();
-    console.log(metadata);
     // Metadata contains unique-identifying info
     // Use that info to check if game already exists
     // gameSchema.findOne({ metadata: metadata}, (err, game) => {
@@ -48,8 +47,9 @@ const saveUploadedGame = (uploadedGame) => {
         stats: stats,
     });
 
+    console.log("Attempting to save game...")
     game.save().then(() => {
-        console.log('Game created');
+        console.log('Game created successfully');
     }).catch((err) => {
         console.log(err);
     });
@@ -62,6 +62,7 @@ const createGame = (req, res) => {
         frames: Object.values(frames),
         stats: req.body.stats,
     });
+
 
     game.save().then(() => {
         console.log('Game created');
@@ -83,13 +84,28 @@ const getGame = (req, res) => {
     });
 };
 
+const getRandomGame = (req, res) => {
+    console.log("Attempting to retrieve random game...")
+    gameSchema.findOneRandom((err, results) => {
+        if(err){
+            console.log(err);
+            res.status(500).json({message: err});
+        } else {
+            console.log("Game successfully retrieved");
+            res.status(200).json(results);
+        }
+    });
+};
+
 const getAllGames = (req, res) => {
+    console.log("Serving request for all saved games...");
     gameSchema.find({}, (err, results) => {
         if(err) {
             console.log(err);
             res.status(500).json({message: err});
         } else {
             res.status(200).json(results);
+            console.log("Request served successfully")
         }
     });
 };
@@ -129,6 +145,7 @@ module.exports = {
     createGame,
     getGame,
     getAllGames,
+    getRandomGame,
     updateGame,
     deleteGame
 };

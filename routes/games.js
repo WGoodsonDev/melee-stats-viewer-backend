@@ -16,6 +16,9 @@ router.get('/getGame/:id', gamesController.getGame);
 // Get all games (temporary)
 router.get('/getAllGames/', gamesController.getAllGames);
 
+// Get one random game
+router.get('/getRandomGame', gamesController.getRandomGame)
+
 // Get all games with specific netplay code
 // router.get('/getGamesByPlayerCode/:playerCode', gamesController.getGamesByPlayerCode);
 
