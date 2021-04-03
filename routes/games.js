@@ -13,6 +13,9 @@ router.post('/createGame', gamesController.createGame);
 // Read (GET)
 router.get('/getGame/:id', gamesController.getGame);
 
+// Get most recent game
+router.get('/getMostRecentGame/', gamesController.getMostRecentGame);
+
 // Get all games (temporary)
 router.get('/getAllGames/', gamesController.getAllGames);
 

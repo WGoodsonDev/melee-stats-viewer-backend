@@ -1,41 +1,32 @@
 const gameSchema = require('../models/games');
-const IncomingForm = require('formidable').IncomingForm;
+const { IncomingForm } = require('formidable');
 const {default: SlippiGame } = require('@slippi/slippi-js');
 
 const uploadGame = (req, res) => {
     console.log("Upload request received");
-    const form = new IncomingForm();
-    form.on('file', (field, file) => {
+    const formidableOptions = {
+        keepExtensions: true,
+        allowEmptyFiles: false,
+    }
+    const form = new IncomingForm(formidableOptions);
+    let docId = "";
+    form.parse(req, (err) => {
+        if(err){
+            res.status(500).send("ERROR: could not parse form data");
+        }
+    });
+    form.on('file', (formName, file) => { // Emitted once for each file (only allowing one file at a time, so only once)
         // file.path - location of file in local filesystem
-
         const game = new SlippiGame(file.path);
         saveUploadedGame(game);
-
     });
-    form.on('end', () => {
-        res.status(200).json();
+    form.on('end', (filePaths) => { // Emitted right after all files write to disk, NOT after saving to DB
+        res.status(200).send();
     })
-    form.parse(req);
 };
 
 const saveUploadedGame = (uploadedGame) => {
     const metadata = uploadedGame.getMetadata();
-    // Metadata contains unique-identifying info
-    // Use that info to check if game already exists
-    // gameSchema.findOne({ metadata: metadata}, (err, game) => {
-    //     if(err){
-    //         console.log('Error: ', err);
-    //         return;
-    //     }
-    //     if(game){
-    //         console.log('Duplicate game found:');
-    //         console.log(game.metadata);
-    //     } else {
-    //         console.log('No duplicate game found')
-    //     }
-    //
-    // });
-
     const settings = uploadedGame.getSettings();
     const frames = uploadedGame.getFrames();
     const stats = uploadedGame.getStats();
@@ -47,9 +38,9 @@ const saveUploadedGame = (uploadedGame) => {
         stats: stats,
     });
 
-    console.log("Attempting to save game...")
-    game.save().then(() => {
-        console.log('Game created successfully');
+    console.log("Attempting to save game...");
+    game.save().then((savedGame) => {
+        console.log("Game created successfully with _id:", savedGame._id);
     }).catch((err) => {
         console.log(err);
     });
@@ -85,7 +76,7 @@ const getGame = (req, res) => {
 };
 
 const getRandomGame = (req, res) => {
-    console.log("Attempting to retrieve random game...")
+    console.log("Attempting to retrieve random game...");
     gameSchema.findOneRandom((err, results) => {
         if(err){
             console.log(err);
@@ -96,6 +87,19 @@ const getRandomGame = (req, res) => {
         }
     });
 };
+
+const getMostRecentGame = (req, res) => {
+    console.log("Attempting to retrieve most recent game...");
+    gameSchema.findOne().sort({uploadTime: -1}).exec((err, results) => {
+        if(err){
+            console.log(err);
+            res.status(500).json({message: err});
+        } else {
+            console.log("Game successfully retrieved");
+            res.status(200).json(results);
+        }
+    })
+}
 
 const getAllGames = (req, res) => {
     console.log("Serving request for all saved games...");
@@ -144,6 +148,7 @@ module.exports = {
     uploadGame,
     createGame,
     getGame,
+    getMostRecentGame,
     getAllGames,
     getRandomGame,
     updateGame,
