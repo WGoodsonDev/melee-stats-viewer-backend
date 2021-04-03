@@ -1,6 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+
+const compression = require('compression');
+const helmet = require('helmet');
+
 const gamesRoutes = require('./routes/games');
 require('dotenv/config');
 
@@ -12,6 +16,8 @@ const corsOptions = {
 const app = express();
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(helmet());
+app.use(compression());
 
 app.use('/api/games', gamesRoutes)
 
@@ -26,7 +32,7 @@ mongoose.connect(
     }
 ).then(() => {
     console.log('Connection to database successful')
-    app.listen(8080, () => { console.log('API running at: http://localhost:8080')});
+    app.listen(8080, () => { console.log(`API running on port: ${process.env.PORT}`)});
 }).catch((err) => {
     console.log(err);
 });
