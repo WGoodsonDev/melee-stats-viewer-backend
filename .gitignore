@@ -68,5 +68,5 @@ typings/
 
 # .slp files
 *.slp
-
+# .txt files
 *.txt
