@@ -8,6 +8,8 @@
   <p align="center">
     REST API for storing and accessing .slp replay files and their data.
     <br />
+    Built with MongoDB, Express.js, Slippi-js
+    <br />
     <!--<a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>-->
     <br />
     <a href="https://github.com/WGoodsonDev/melee-stats-viewer-backend/issues">Report Bug</a>
@@ -64,12 +66,6 @@ REST API for storing and accessing .slp replay files and their data. Designed fo
 
 To get a local copy up and running follow these simple steps.
 
-### Prerequisites
-
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
 
 ### Installation
 
